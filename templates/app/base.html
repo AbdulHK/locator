@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Friends Map</title>
+
+    {% load leaflet_tags %}
+    {% load static %}
+
+    {% leaflet_js plugins="forms" %}
+    {% leaflet_css plugins="forms" %}
+
+{#    <link rel="shortcut icon" href="{% static "Users/images/favicon.ico" %}" type="image/x-icon"/>#}
+    <link rel="stylesheet" href="{% static "app/css/bootstrap.min.css" %}" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" href="{% static "app/css/style.css" %}" type="text/css"/>
+
+    <script src="{% static "app/js/jquery.min.js" %}"></script>
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'app:landing' %}">Friends Map</a>
+            </div>
+            <ul class="nav navbar-nav">
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'app:landing' %}">Home</a></li>
+                {% else %}
+
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                    <p class="navbar-text">{{ user.get_full_name }} ({{ user.username }})</p>
+                    <li><a href="{% url 'app:friends' %}">Friends</a></li>
+                    <li><a href="{% url 'app:userprofile' %}">My Profile</a></li>
+                    <li><a href="{% url 'app:logout' %}">Log Out</a></li>
+                {% else %}
+                    <li><a href="{% url 'app:login' %}">Log In</a></li>
+                    <li><a href="{% url 'app:signup' %}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div id="content">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<script type="text/javascript" src="{% static 'app/js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'app/js/bootstrap.min.js' %}"></script>
+
+</body>
+</html>

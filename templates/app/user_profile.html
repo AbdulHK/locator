@@ -1,0 +1,44 @@
+{% extends "app/base.html" %}
+
+{% load staticfiles %}
+{% load leaflet_tags %}
+
+{% block content %}
+    <div class="container">
+        {% if user.is_authenticated %}
+            <h3>User Profile</h3>
+
+            <form method="post" action="{% url 'app:userprofile' %}" >
+                {% csrf_token %}
+
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>Error! </strong>{{ error|escape }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+
+
+                {% for field in form %}
+                    <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{ field.label }}</label>
+                        <div class="col-xs-3">
+                            {{ field }}
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <input type="submit" class="btn btn-primary" value="Save Changes">
+            </form>
+        {% else %}
+            <div class="alert alert-warning">
+                <strong>Warning!</strong> You are not logged in.
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
+

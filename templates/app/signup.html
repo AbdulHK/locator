@@ -1,0 +1,30 @@
+{% extends "app/base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block content %}
+    <div class="container">
+        <form method="post" action="." class="form-register" role="form">
+            {% csrf_token %}
+            <h2 class="form-register-heading">{% trans "Sign up" %}</h2>
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>Error! </strong>{{ error|escape }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+
+                {% for field in form %}
+                    {{ field }}
+                {% endfor %}
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">{% trans "Create an account" %}</button>
+            <br>{% trans "Do you have an account?" %} <a href="{% url 'app:login' %}">{% trans "Sign in here" %}</a>
+        </form>
+    </div>
+
+{% endblock %}
